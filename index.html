@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Learning Banner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .banner-card {
+            background: rgba(255, 255, 255, 0.95);
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-left: 8px solid #ff7675;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .badge {
+            background-color: #ff7675;
+            color: white;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .date {
+            color: #636e72;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .word-title {
+            font-size: 32px;
+            color: #2d3436;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        .pronunciation {
+            color: #0984e3;
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        .meaning-box {
+            background-color: #f1f2f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .meaning-title {
+            font-size: 12px;
+            color: #b2bec3;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .meaning-text {
+            font-size: 18px;
+            color: #2f3640;
+            font-weight: 600;
+        }
+        .example {
+            font-size: 15px;
+            color: #57606f;
+            line-height: 1.5;
+        }
+        .example span {
+            color: #2f3640;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="banner-card">
+        <div class="header">
+            <span class="badge">📖 Word of the Day</span>
+            <span class="date">আজকের শব্দ</span>
+        </div>
+        
+        <h1 class="word-title">Resilience</h1>
+        <div class="pronunciation">উচ্চারণ: রি-সিলিয়েন্স (Noun)</div>
+        
+        <div class="meaning-box">
+            <div class="meaning-title">বাংলা অর্থ</div>
+            <div class="meaning-text"> ঘুরে দাঁড়ানোর ক্ষমতা / সহনশীলতা</div>
+        </div>
+        
+        <div class="example">
+            <span>উদাহরণ:</span> "She showed great resilience in overcoming her challenges." (সে তার চ্যালেঞ্জগুলো মোকাবিলা করে ঘুরে দাঁড়ানোর দারুণ ক্ষমতা দেখিয়েছে।)
+        </div>
+    </div>
+
+</body>
+</html>
