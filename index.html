@@ -1,115 +1,1307 @@
+```html
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" class="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word Learning Banner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>English Master – Learn English Step by Step</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                        },
+                        accent: {
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Hind Siliguri', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts for Bengali & English -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            padding: 20px;
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
-        .banner-card {
-            background: rgba(255, 255, 255, 0.95);
-            width: 100%;
-            max-width: 600px;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 8px solid #ff7675;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.4);
+            border-radius: 9999px;
         }
-        .badge {
-            background-color: #ff7675;
-            color: white;
-            padding: 5px 12px;
-            font-size: 12px;
-            font-weight: bold;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        /* Glassmorphism effects */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        .date {
-            color: #636e72;
-            font-size: 14px;
-            font-weight: 600;
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .word-title {
-            font-size: 32px;
-            color: #2d3436;
-            margin-bottom: 5px;
-            font-weight: 700;
+        /* Touch ripples and feedback */
+        .active-scale {
+            transition: transform 0.15s ease, opacity 0.15s ease;
         }
-        .pronunciation {
-            color: #0984e3;
-            font-size: 14px;
-            margin-bottom: 15px;
-            font-style: italic;
+        .active-scale:active {
+            transform: scale(0.96);
         }
-        .meaning-box {
-            background-color: #f1f2f6;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+        /* Card Flip & Transitions */
+        .slide-in {
+            animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .meaning-title {
-            font-size: 12px;
-            color: #b2bec3;
-            text-transform: uppercase;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-        .meaning-text {
-            font-size: 18px;
-            color: #2f3640;
-            font-weight: 600;
-        }
-        .example {
-            font-size: 15px;
-            color: #57606f;
-            line-height: 1.5;
-        }
-        .example span {
-            color: #2f3640;
-            font-weight: bold;
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col justify-between pb-20 md:pb-0 selection:bg-brand-500 selection:text-white transition-colors duration-300">
 
-    <div class="banner-card">
-        <div class="header">
-            <span class="badge">📖 Word of the Day</span>
-            <span class="date">আজকের শব্দ</span>
+    <!-- Top App Bar Header -->
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex items-center justify-between max-w-md mx-auto w-full md:max-w-2xl lg:max-w-4xl">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                <i class="fa-solid font-bold text-lg fa-graduation-cap"></i>
+            </div>
+            <div>
+                <h1 class="text-base font-bold leading-tight bg-gradient-to-r from-brand-600 to-indigo-500 bg-clip-text text-transparent">English Master</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">ইংরেজি শিখুন সহজে</p>
+            </div>
         </div>
-        
-        <h1 class="word-title">Resilience</h1>
-        <div class="pronunciation">উচ্চারণ: রি-সিলিয়েন্স (Noun)</div>
-        
-        <div class="meaning-box">
-            <div class="meaning-title">বাংলা অর্থ</div>
-            <div class="meaning-text"> ঘুরে দাঁড়ানোর ক্ষমতা / সহনশীলতা</div>
+
+        <!-- Header Stats & Theme Toggle -->
+        <div class="flex items-center space-x-2">
+            <!-- Streak Badge -->
+            <div class="flex items-center space-x-1 bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 px-2.5 py-1 rounded-full text-xs font-semibold border border-amber-200 dark:border-amber-800/50">
+                <i class="fa-solid fa-fire text-amber-500 animate-pulse"></i>
+                <span id="header-streak-count">0</span>
+            </div>
+
+            <!-- Points Counter -->
+            <div class="flex items-center space-x-1 bg-indigo-50 dark:bg-indigo-950/50 text-brand-600 dark:text-indigo-400 px-2.5 py-1 rounded-full text-xs font-semibold border border-indigo-200 dark:border-indigo-800/50">
+                <i class="fa-solid fa-star text-amber-400"></i>
+                <span id="header-points-count">0</span>
+            </div>
+
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle-btn" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center active-scale hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                <i class="fa-solid fa-moon dark:hidden"></i>
+                <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+            </button>
         </div>
-        
-        <div class="example">
-            <span>উদাহরণ:</span> "She showed great resilience in overcoming her challenges." (সে তার চ্যালেঞ্জগুলো মোকাবিলা করে ঘুরে দাঁড়ানোর দারুণ ক্ষমতা দেখিয়েছে।)
+    </header>
+
+    <!-- Main Content Container -->
+    <main id="app-viewport" class="flex-1 max-w-md mx-auto w-full md:max-w-2xl lg:max-w-4xl p-4 overflow-y-auto">
+
+        <!-- ================= TAB 1: HOME DASHBOARD ================= -->
+        <section id="tab-home" class="tab-content space-y-5 slide-in">
+            <!-- Welcome Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 via-indigo-600 to-purple-700 text-white p-6 shadow-xl shadow-brand-500/20">
+                <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+                <div class="relative z-10">
+                    <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-medium tracking-wide uppercase">স্বাগতম back!</span>
+                    <h2 class="text-2xl font-bold mt-2" id="home-welcome-name">হ্যালো, শিক্ষার্থী! 👋</h2>
+                    <p class="text-indigo-100 text-sm mt-1">আজকের নতুন ইংরেজি শব্দগুলো শিখে নাও এবং তোমার দক্ষতা বাড়াও।</p>
+                    
+                    <!-- Daily Progress Bar -->
+                    <div class="mt-5 space-y-1.5">
+                        <div class="flex justify-between text-xs font-medium text-indigo-100">
+                            <span>দৈনিক লক্ষ্য (Daily Goal)</span>
+                            <span id="home-daily-progress-text">0 / 5 শব্দ</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-black/20 rounded-full overflow-hidden p-0.5">
+                            <div id="home-daily-progress-bar" class="h-full bg-accent-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Action Buttons -->
+                    <div class="mt-6 flex gap-3">
+                        <button onclick="switchTab('learn')" class="flex-1 bg-white text-brand-700 font-semibold py-2.5 px-4 rounded-xl text-sm shadow-md hover:bg-slate-50 active-scale flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-play text-xs"></i>
+                            <span>পড়া চালিয়ে যান</span>
+                        </button>
+                        <button onclick="switchTab('practice')" class="bg-indigo-800/60 backdrop-blur-md hover:bg-indigo-800/80 text-white font-medium py-2.5 px-4 rounded-xl text-sm border border-white/20 active-scale flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-gamepad text-xs"></i>
+                            <span>অনুশীলন</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Overview Cards -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="glass-card p-4 rounded-2xl shadow-sm flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">মোট শেখা শব্দ</p>
+                        <h3 class="text-xl font-extrabold text-slate-800 dark:text-slate-100" id="home-learned-words-count">0</h3>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl shadow-sm flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-xl bg-indigo-500/10 text-brand-500 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">বর্তমান লেভেল</p>
+                        <h3 class="text-xl font-extrabold text-slate-800 dark:text-slate-100" id="home-current-level-badge">Level 1</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Word of the Day Card -->
+            <div class="glass-card p-5 rounded-3xl shadow-sm border border-slate-200/80 dark:border-slate-800">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="flex items-center space-x-1.5 text-xs font-bold text-amber-500 bg-amber-500/10 px-3 py-1 rounded-full">
+                        <i class="fa-solid fa-star"></i>
+                        <span>আজকের বিশেষ শব্দ (Word of the Day)</span>
+                    </span>
+                    <button onclick="playAudio('Opportunity')" class="w-8 h-8 rounded-full bg-brand-50 dark:bg-slate-800 text-brand-600 dark:text-brand-400 flex items-center justify-center active-scale">
+                        <i class="fa-solid fa-volume-high text-xs"></i>
+                    </button>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex items-baseline space-x-2">
+                        <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">Opportunity</h3>
+                        <span class="text-xs text-slate-400 font-mono">/ˌɒp.əˈtʃuː.nə.ti/</span>
+                    </div>
+                    <p class="text-base font-semibold text-brand-600 dark:text-indigo-400">অর্থ: সুযোগ / সম্ভাবনা</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 italic pt-1 border-t border-slate-100 dark:border-slate-800/80">
+                        "Grab every opportunity to learn standard English."<br>
+                        <span class="text-slate-500 dark:text-slate-400 not-italic">(ইংরেজি শেখার প্রতিটি সুযোগ কাজে লাগাও।)</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Quick Path Selector -->
+            <div class="space-y-3">
+                <h3 class="text-base font-bold text-slate-800 dark:text-slate-200">লেভেলসমূহ (Learning Levels)</h3>
+                <div id="home-levels-list" class="space-y-2.5">
+                    <!-- Dynamic rendering of 5 Levels -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: STEP-BY-STEP LEARN ================= -->
+        <section id="tab-learn" class="tab-content space-y-4 hidden slide-in">
+            <!-- Level Selector Pills Header -->
+            <div class="flex space-x-2 overflow-x-auto pb-2 scrollbar-none" id="learn-level-pills">
+                <!-- Dynamic Pill Buttons L1-L5 -->
+            </div>
+
+            <!-- Learning Flashcard Container -->
+            <div class="relative glass-card rounded-3xl p-6 shadow-lg border border-slate-200/80 dark:border-slate-800 space-y-6 flex flex-col justify-between min-h-[380px]">
+                <!-- Top Card Indicators -->
+                <div class="flex items-center justify-between text-xs font-semibold text-slate-400">
+                    <span id="learn-card-progress-label">শব্দ ১ / ১৫</span>
+                    <span id="learn-card-status-badge" class="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                        অসম্পূর্ণ
+                    </span>
+                </div>
+
+                <!-- Main Word Details -->
+                <div class="text-center space-y-3 my-auto">
+                    <!-- Phonetic & Audio Play -->
+                    <div class="inline-flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 px-4 py-1.5 rounded-full">
+                        <span id="learn-word-phonetics" class="text-sm font-mono text-slate-500 dark:text-slate-400">/ˈæp.əl/</span>
+                        <button id="learn-audio-btn" class="text-brand-600 dark:text-brand-400 hover:text-brand-700 active-scale text-base pl-1">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                    </div>
+
+                    <!-- English Word -->
+                    <h2 id="learn-word-english" class="text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+                        Apple
+                    </h2>
+
+                    <!-- Bengali Meaning -->
+                    <div class="py-1">
+                        <span id="learn-word-bengali" class="text-2xl font-bold text-brand-600 dark:text-indigo-400">
+                            আপেল
+                        </span>
+                    </div>
+
+                    <!-- Sentence Box -->
+                    <div class="bg-indigo-50/50 dark:bg-slate-900/50 p-4 rounded-2xl border border-indigo-100/60 dark:border-slate-800 text-left space-y-1">
+                        <p class="text-xs uppercase font-bold text-indigo-500 dark:text-indigo-400">উদাহরণ বাক্য:</p>
+                        <p id="learn-sentence-english" class="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                            An apple a day keeps the doctor away.
+                        </p>
+                        <p id="learn-sentence-bengali" class="text-xs text-slate-600 dark:text-slate-400">
+                            প্রতিদিন একটি আপেল খেলে ডাক্তার থেকে দূরে থাকা যায়।
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="space-y-3 pt-2">
+                    <button id="learn-mark-mastered-btn" class="w-full py-3 px-4 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-700 text-white shadow-md active-scale flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>শব্দটি আয়ত্ত করেছি (Mark Mastered)</span>
+                    </button>
+
+                    <!-- Nav Buttons -->
+                    <div class="flex space-x-3">
+                        <button id="learn-prev-btn" class="flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 active-scale flex items-center justify-center space-x-1">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                            <span>পূর্ববর্তী</span>
+                        </button>
+                        <button id="learn-next-btn" class="flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm bg-brand-600 hover:bg-brand-700 text-white active-scale flex items-center justify-center space-x-1">
+                            <span>পরবর্তী</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: PRACTICE EXERCISES ================= -->
+        <section id="tab-practice" class="tab-content space-y-5 hidden slide-in">
+            <div class="text-center space-y-1">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">অনুশীলন কেন্দ্র (Practice Hub)</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">তোমার ইংরেজি দক্ষতা পরীক্ষা এবং ঝালাই করো</p>
+            </div>
+
+            <!-- Practice Mode Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                <!-- Mode 1: MCQ -->
+                <div onclick="startPracticeMode('mcq')" class="glass-card p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer hover:border-brand-500 transition active-scale">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-brand-600 dark:text-indigo-400 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">সঠিক অর্থ বাছাই (MCQ)</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">ইংরেজি শব্দের ৪টি বাংলা অপশন থেকে সঠিকটি নির্বাচন করো</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+
+                <!-- Mode 2: Fill in the Blanks -->
+                <div onclick="startPracticeMode('fill')" class="glass-card p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer hover:border-brand-500 transition active-scale">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">শূন্যস্থান পূরণ</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">বাক্যের সঠিক ইংরেজি শব্দটি বেছে শূন্যস্থান পূর্ণ করো</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+
+                <!-- Mode 3: Word Matching -->
+                <div onclick="startPracticeMode('matching')" class="glass-card p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer hover:border-brand-500 transition active-scale">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">শব্দ মেলানো (Matching)</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">ইংরেজি ও বাংলা শব্দের সঠিক জোড়া মেলাও</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+
+                <!-- Mode 4: Sentence Making -->
+                <div onclick="startPracticeMode('sentence')" class="glass-card p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer hover:border-brand-500 transition active-scale">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-500 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-cubes"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">বাক্য তৈরি (Sentence Making)</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">শব্দগুলো সাজিয়ে সঠিক ইংরেজি বাক্য তৈরি করো</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Interactive Practice Dynamic Modal / Container -->
+            <div id="practice-interactive-area" class="hidden glass-card rounded-3xl p-5 shadow-lg border border-slate-200 dark:border-slate-800 space-y-5 slide-in">
+                <!-- Content generated dynamically -->
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: LEVEL TEST & UNLOCK ================= -->
+        <section id="tab-test" class="tab-content space-y-5 hidden slide-in">
+            <div class="text-center space-y-1">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">লেভেল পরীক্ষা (Level Mastery Test)</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">পরবর্তী লেভেল আনলক করতে কমপক্ষে ৮০% নম্বর পেতে হবে</p>
+            </div>
+
+            <!-- Test Starter Card -->
+            <div id="test-intro-card" class="glass-card rounded-3xl p-6 text-center space-y-4 border border-slate-200 dark:border-slate-800 shadow-md">
+                <div class="w-16 h-16 rounded-3xl bg-brand-500/10 text-brand-600 dark:text-brand-400 mx-auto flex items-center justify-center text-3xl">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div class="space-y-1">
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">১০ টি প্রশ্নের মূল্যায়ন পরীক্ষা</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto">তোমার বর্তমান লেভেলের জ্ঞান যাচাই করো। সফল হলে পরের লেভেল আনলক হবে!</p>
+                </div>
+
+                <!-- Select Level for Test -->
+                <div class="max-w-xs mx-auto text-left space-y-1 pt-2">
+                    <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">পরীক্ষার লেভেল নির্বাচন করুন:</label>
+                    <select id="test-level-select" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <!-- Dynamic options of unlocked levels -->
+                    </select>
+                </div>
+
+                <button onclick="startLevelTest()" class="w-full max-w-xs bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg active-scale">
+                    পরীক্ষা শুরু করুন
+                </button>
+            </div>
+
+            <!-- Interactive Quiz Card -->
+            <div id="test-quiz-card" class="hidden glass-card rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-lg space-y-5">
+                <div class="flex items-center justify-between text-xs font-semibold text-slate-400">
+                    <span id="test-question-counter">প্রশ্ন ১ / ১০</span>
+                    <span id="test-timer" class="text-amber-500 font-mono"><i class="fa-regular fa-clock mr-1"></i>00:30</span>
+                </div>
+
+                <!-- Question Text -->
+                <div class="space-y-1 text-center py-2">
+                    <span class="text-xs text-brand-600 dark:text-indigo-400 font-bold uppercase tracking-wider">সঠিক বাংলা অর্থ কোনটি?</span>
+                    <h3 id="test-question-word" class="text-3xl font-black text-slate-900 dark:text-white">Knowledge</h3>
+                </div>
+
+                <!-- MCQ Options -->
+                <div id="test-options-container" class="grid grid-cols-1 gap-2.5">
+                    <!-- Dynamic option buttons -->
+                </div>
+            </div>
+
+            <!-- Test Result Card -->
+            <div id="test-result-card" class="hidden glass-card rounded-3xl p-6 text-center border border-slate-200 dark:border-slate-800 shadow-lg space-y-5">
+                <div id="test-result-icon" class="w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl shadow-inner">
+                    <!-- Dynamic Icon -->
+                </div>
+                <div class="space-y-1">
+                    <h3 id="test-result-title" class="text-xl font-extrabold text-slate-900 dark:text-white">অভিনন্দন! 🎉</h3>
+                    <p id="test-result-score-text" class="text-sm font-semibold text-brand-600 dark:text-indigo-400">তুমি পেয়েছেন ১০/১০ (১০০%)</p>
+                    <p id="test-result-msg" class="text-xs text-slate-500 dark:text-slate-400">তুমি পরবর্তী লেভেল আনলক করেছ!</p>
+                </div>
+
+                <button onclick="resetTestView()" class="w-full bg-brand-600 text-white font-bold py-3 rounded-xl shadow-md active-scale">
+                    পুনরায় পরীক্ষা বা সমাপ্তি
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= TAB 5: PROFILE & ACHIEVEMENTS ================= -->
+        <section id="tab-profile" class="tab-content space-y-5 hidden slide-in">
+            <!-- Profile Info Card -->
+            <div class="glass-card rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center space-x-4">
+                <div class="relative">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-500 text-white flex items-center justify-center text-2xl font-bold shadow-md">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full"></span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center space-x-2">
+                        <h3 id="profile-user-name" class="text-lg font-bold text-slate-900 dark:text-white truncate">শিক্ষার্থী</h3>
+                        <button onclick="editUserName()" class="text-slate-400 hover:text-brand-600 active-scale text-xs">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">ইংরেজি শিক্ষানবিশ</p>
+                </div>
+            </div>
+
+            <!-- Grid Stats -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="glass-card p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <p class="text-xs text-slate-500 dark:text-slate-400">মোট পয়েন্ট</p>
+                    <p id="profile-stat-points" class="text-2xl font-black text-brand-600 dark:text-indigo-400">0</p>
+                </div>
+                <div class="glass-card p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <p class="text-xs text-slate-500 dark:text-slate-400">ধারাবাহিকতা (Streak)</p>
+                    <p id="profile-stat-streak" class="text-2xl font-black text-amber-500">0 দিন</p>
+                </div>
+                <div class="glass-card p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <p class="text-xs text-slate-500 dark:text-slate-400">শেখা শব্দ</p>
+                    <p id="profile-stat-words" class="text-2xl font-black text-emerald-500">0</p>
+                </div>
+                <div class="glass-card p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <p class="text-xs text-slate-500 dark:text-slate-400">সর্বোচ্চ আনলক লেভেল</p>
+                    <p id="profile-stat-level" class="text-2xl font-black text-purple-500">Level 1</p>
+                </div>
+            </div>
+
+            <!-- Badges Section -->
+            <div class="space-y-3">
+                <h3 class="text-base font-bold text-slate-800 dark:text-slate-200">অর্জনসমূহ (Badges)</h3>
+                <div id="profile-badges-grid" class="grid grid-cols-3 gap-3">
+                    <!-- Dynamic Badges Cards -->
+                </div>
+            </div>
+
+            <!-- Settings & Reset -->
+            <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+                <button onclick="confirmResetProgress()" class="w-full py-3 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 rounded-xl font-semibold text-sm border border-red-200 dark:border-red-900/50 hover:bg-red-100 active-scale flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-trash-can"></i>
+                    <span>সমস্ত তথ্য রিসেট করুন (Reset Progress)</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar (Mobile Native Style) -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 py-2 px-3 max-w-md mx-auto w-full md:max-w-2xl lg:max-w-4xl">
+        <div class="flex justify-around items-center">
+            <button onclick="switchTab('home')" id="nav-btn-home" class="nav-btn flex flex-col items-center justify-center space-y-1 text-brand-600 dark:text-brand-400 font-semibold active-scale">
+                <i class="fa-solid fa-house text-lg"></i>
+                <span class="text-[10px]">হোম</span>
+            </button>
+            <button onclick="switchTab('learn')" id="nav-btn-learn" class="nav-btn flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-medium active-scale">
+                <i class="fa-solid fa-book-bookmark text-lg"></i>
+                <span class="text-[10px]">শিক্ষা</span>
+            </button>
+            <button onclick="switchTab('practice')" id="nav-btn-practice" class="nav-btn flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-medium active-scale">
+                <i class="fa-solid fa-gamepad text-lg"></i>
+                <span class="text-[10px]">অনুশীলন</span>
+            </button>
+            <button onclick="switchTab('test')" id="nav-btn-test" class="nav-btn flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-medium active-scale">
+                <i class="fa-solid fa-circle-check text-lg"></i>
+                <span class="text-[10px]">পরীক্ষা</span>
+            </button>
+            <button onclick="switchTab('profile')" id="nav-btn-profile" class="nav-btn flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-medium active-scale">
+                <i class="fa-solid fa-user text-lg"></i>
+                <span class="text-[10px]">প্রোফাইল</span>
+            </button>
         </div>
+    </nav>
+
+    <!-- Custom Notification Toast -->
+    <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 hidden max-w-xs w-full bg-slate-900 text-white text-xs px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-2 border border-slate-700 slide-in">
+        <i id="toast-icon" class="fa-solid fa-circle-info text-brand-400"></i>
+        <span id="toast-message">বিজ্ঞপ্তি বার্তা</span>
     </div>
 
+    <!-- APP LOGIC & VOCABULARY DATA -->
+    <script>
+        /* ================= 1. COMPREHENSIVE VOCABULARY DATABASE ================= */
+        const VOCABULARY_DATA = {
+            1: [
+                { id: 'l1_1', english: 'Apple', bengali: 'আপেল', phonetic: '/ˈæp.əl/', sentence: 'An apple is a sweet fruit.', translation: 'আপেল একটি মিষ্টি ফল।' },
+                { id: 'l1_2', english: 'Book', bengali: 'বই', phonetic: '/bʊk/', sentence: 'I read an English book every day.', translation: 'আমি প্রতিদিন একটি ইংরেজি বই পড়ি।' },
+                { id: 'l1_3', english: 'Cat', bengali: 'বিড়াল', phonetic: '/kæt/', sentence: 'The cat sleeps under the table.', translation: 'বিড়ালটি টেবিলের নিচে ঘুমাচ্ছে।' },
+                { id: 'l1_4', english: 'Dog', bengali: 'কুকুর', phonetic: '/dɒɡ/', sentence: 'The dog is very loyal.', translation: 'কুকুরটি খুব বিশ্বস্ত।' },
+                { id: 'l1_5', english: 'Water', bengali: 'পানি', phonetic: '/ˈwɔː.tər/', sentence: 'Drink clean water daily.', translation: 'প্রতিদিন পরিষ্কার পানি পান করুন।' },
+                { id: 'l1_6', english: 'Sun', bengali: 'সূর্য', phonetic: '/sʌn/', sentence: 'The sun rises in the east.', translation: 'সূর্য পূর্ব দিকে ওঠে।' },
+                { id: 'l1_7', english: 'Tree', bengali: 'গাছ', phonetic: '/triː/', sentence: 'Trees give us oxygen.', translation: 'গাছ আমাদের অক্সিজেন দেয়।' },
+                { id: 'l1_8', english: 'House', bengali: 'বাড়ি', phonetic: '/haʊs/', sentence: 'This is my sweet house.', translation: 'এটি আমার সুন্দর বাড়ি।' },
+                { id: 'l1_9', english: 'Pen', bengali: 'কলম', phonetic: '/pen/', sentence: 'I write with a blue pen.', translation: 'আমি নীল কলম দিয়ে লিখি।' },
+                { id: 'l1_10', english: 'Door', bengali: 'দরজা', phonetic: '/dɔːr/', sentence: 'Please open the door.', translation: 'দয়া করে দরজাটি খুলুন।' }
+            ],
+            2: [
+                { id: 'l2_1', english: 'Beautiful', bengali: 'সুন্দর', phonetic: '/ˈbjuː.tɪ.fəl/', sentence: 'The flower is very beautiful.', translation: 'ফুলটি খুব সুন্দর।' },
+                { id: 'l2_2', english: 'Happy', bengali: 'সন্তুষ্ট / সুখী', phonetic: '/ˈhæp.i/', sentence: 'She feels happy today.', translation: 'সে আজ খুব সুখী বোধ করছে।' },
+                { id: 'l2_3', english: 'Family', bengali: 'পরিবার', phonetic: '/ˈfæm.əl.i/', sentence: 'I love my family very much.', translation: 'আমি আমার পরিবারকে খুব ভালোবাসি।' },
+                { id: 'l2_4', english: 'Friend', bengali: 'বন্ধু', phonetic: '/frend/', sentence: 'A true friend always helps.', translation: 'একজন প্রকৃত বন্ধু সবসময় সাহায্য করে।' },
+                { id: 'l2_5', english: 'Garden', bengali: 'বাগান', phonetic: '/ˈɡɑː.dən/', sentence: 'They walk in the garden.', translation: 'তারা বাগানে হাঁটছে।' },
+                { id: 'l2_6', english: 'School', bengali: 'বিদ্যালয়', phonetic: '/skuːl/', sentence: 'Children go to school on weekdays.', translation: 'শিশুরা কর্মদিবসে স্কুলে যায়।' },
+                { id: 'l2_7', english: 'Teacher', bengali: 'শিক্ষক', phonetic: '/ˈtiː.tʃər/', sentence: 'The teacher guides the students.', translation: 'শিক্ষক শিক্ষার্থীদের পথপ্রদর্শন করেন।' },
+                { id: 'l2_8', english: 'Journey', bengali: 'যাত্রা', phonetic: '/ˈdʒɜː.ni/', sentence: 'Have a safe journey.', translation: 'আপনার যাত্রা নিরাপদ হোক।' }
+            ],
+            3: [
+                { id: 'l3_1', english: 'Important', bengali: 'গুরুত্বপূর্ণ', phonetic: '/ɪmˈpɔː.tənt/', sentence: 'Education is very important for all.', translation: 'শিক্ষা সবার জন্য অত্যন্ত গুরুত্বপূর্ণ।' },
+                { id: 'l3_2', english: 'Knowledge', bengali: 'জ্ঞান', phonetic: '/ˈnɒl.ɪdʒ/', sentence: 'Knowledge gives you power.', translation: 'জ্ঞান আপনাকে শক্তি জোগায়।' },
+                { id: 'l3_3', english: 'Experience', bengali: 'অভিজ্ঞতা', phonetic: '/ɪkˈspɪə.ri.əns/', sentence: 'Experience is the best teacher.', translation: 'অভিজ্ঞতাই সেরা শিক্ষক।' },
+                { id: 'l3_4', english: 'Challenge', bengali: 'চ্যালেঞ্জ / আহ্বান', phonetic: '/ˈtʃæl.ɪndʒ/', sentence: 'Accept every challenge with courage.', translation: 'সাহসের সাথে প্রতিটি চ্যালেঞ্জ গ্রহণ করো।' },
+                { id: 'l3_5', english: 'Decision', bengali: 'সিদ্ধান্ত', phonetic: '/dɪˈsɪʒ.ən/', sentence: 'Take the right decision in time.', translation: 'সময়ে সঠিক সিদ্ধান্ত গ্রহণ করুন।' },
+                { id: 'l3_6', english: 'Success', bengali: 'সফলতা', phonetic: '/səkˈses/', sentence: 'Hard work brings success.', translation: 'কঠোর পরিশ্রম সফলতা আনে।' }
+            ],
+            4: [
+                { id: 'l4_1', english: 'Opportunity', bengali: 'সুযোগ', phonetic: '/ˌɒp.əˈtʃuː.nə.ti/', sentence: 'Never miss a good opportunity.', translation: 'ভালো সুযোগ কখনো হাতছাড়া কোরো না।' },
+                { id: 'l4_2', english: 'Confidence', bengali: 'আত্মবিশ্বাস', phonetic: '/ˈkɒn.fɪ.dəns/', sentence: 'Self-confidence leads to achievement.', translation: 'আত্মবিশ্বাস অর্জনের দিকে নিয়ে যায়।' },
+                { id: 'l4_3', english: 'Communication', bengali: 'যোগাযোগ', phonetic: '/kəˌmjuː.nɪˈkeɪ.ʃən/', sentence: 'Good communication skills are essential.', translation: 'ভালো যোগাযোগ দক্ষতা অপরিহার্য।' },
+                { id: 'l4_4', english: 'Responsibility', bengali: 'দায়িত্ব', phonetic: '/rɪˌspɒn.sɪˈbɪl.ə.ti/', sentence: 'Take responsibility for your actions.', translation: 'আপনার কাজের দায়ভার গ্রহণ করুন।' },
+                { id: 'l4_5', english: 'Perspective', bengali: 'দৃষ্টিকোণ', phonetic: '/pəˈspek.tɪv/', sentence: 'Look at it from a new perspective.', translation: 'এটি নতুন দৃষ্টিকোণ থেকে দেখুন।' }
+            ],
+            5: [
+                { id: 'l5_1', english: 'Determination', bengali: 'দৃঢ় সংকল্প', phonetic: '/dɪˌtɜː.mɪˈneɪ.ʃən/', sentence: 'Strong determination wins difficulties.', translation: 'দৃঢ় সংকল্প সব বাধা জয় করে।' },
+                { id: 'l5_2', english: 'Achievement', bengali: 'অর্জন', phonetic: '/əˈtʃiːv.mənt/', sentence: 'Winning the prize was a great achievement.', translation: 'পুরস্কার জেতা একটি বড় অর্জন ছিল।' },
+                { id: 'l5_3', english: 'Perseverance', bengali: 'অধ্যাবসায়', phonetic: '/ˌpɜː.sɪˈvɪə.rəns/', sentence: 'Perseverance is key to mastery.', translation: 'অধ্যাবসায় হলো দক্ষ হওয়ার চাবিকাঠি।' },
+                { id: 'l5_4', english: 'Innovation', bengali: 'উদ্ভাবন', phonetic: '/ˌɪn.əˈveɪ.ʃən/', sentence: 'Technology thrives on continuous innovation.', translation: 'প্রযুক্তি ক্রমাগত উদ্ভাবনের মাধ্যমে এগিয়ে যায়।' },
+                { id: 'l5_5', english: 'Leadership', bengali: 'নেতৃত্ব', phonetic: '/ˈliː.də.ʃɪp/', sentence: 'True leadership inspires others.', translation: 'প্রকৃত নেতৃত্ব অন্যকে অনুপ্রাণিত করে।' }
+            ]
+        };
+
+        const LEVEL_TITLES = {
+            1: "Beginner (প্রাথমিক)",
+            2: "Elementary (সহজ)",
+            3: "Intermediate (মধ্যবর্তী)",
+            4: "Upper Intermediate (উচ্চ-মধ্যবর্তী)",
+            5: "Advanced (উন্নত)"
+        };
+
+        const BADGES_CONFIG = [
+            { id: 'badge_first', title: 'প্রথম পদক্ষেপ', icon: 'fa-seedling', desc: 'প্রথম শব্দ সম্পন্ন করা হয়েছে' },
+            { id: 'badge_novice', title: 'শব্দানুরাগী', icon: 'fa-book-open', desc: '১০টি শব্দ সম্পন্ন' },
+            { id: 'badge_quiz', title: 'কুইজ মাস্টার', icon: 'fa-bullseye', desc: '১টি অনুশীলনে পূর্ণ নম্বর' },
+            { id: 'badge_l2', title: 'লেভেল ২ বিজয়ী', icon: 'fa-medal', desc: 'লেভেল ২ আনলক করা হয়েছে' },
+            { id: 'badge_l5', title: 'ইংলিশ লেজেন্ড', icon: 'fa-crown', desc: 'লেভেল ৫ আনলক করা হয়েছে' }
+        ];
+
+        /* ================= 2. STATE MANAGEMENT ================= */
+        let state = {
+            userName: 'শিক্ষার্থী',
+            unlockedLevels: [1],
+            currentLearnLevel: 1,
+            currentLearnIndex: 0,
+            masteredWords: [], // Array of word IDs
+            points: 0,
+            streak: 1,
+            lastActiveDate: new Date().toISOString().slice(0, 10),
+            badges: ['badge_first']
+        };
+
+        /* ================= 3. INITIALIZATION & LOCAL STORAGE ================= */
+        window.onload = function() {
+            loadState();
+            checkStreak();
+            initTheme();
+            renderHeaderStats();
+            renderHome();
+            renderLearnPills();
+            loadLearnCard();
+            renderProfile();
+
+            // Set SpeechSynthesis voice fallback
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.onvoiceschanged = () => {};
+            }
+        };
+
+        function saveState() {
+            localStorage.setItem('english_master_v1', JSON.stringify(state));
+            renderHeaderStats();
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('english_master_v1');
+            if (saved) {
+                try {
+                    state = { ...state, ...JSON.parse(saved) };
+                } catch(e) {
+                    console.error("Storage load error", e);
+                }
+            }
+        }
+
+        function checkStreak() {
+            const today = new Date().toISOString().slice(0, 10);
+            if (state.lastActiveDate !== today) {
+                const prev = new Date();
+                prev.setDate(prev.getDate() - 1);
+                const prevStr = prev.toISOString().slice(0, 10);
+                
+                if (state.lastActiveDate === prevStr) {
+                    state.streak += 1;
+                } else if (state.lastActiveDate < prevStr) {
+                    state.streak = 1;
+                }
+                state.lastActiveDate = today;
+                saveState();
+            }
+        }
+
+        /* ================= 4. THEME & NAVIGATION ================= */
+        function initTheme() {
+            const toggleBtn = document.getElementById('theme-toggle-btn');
+            toggleBtn.onclick = () => {
+                const html = document.documentElement;
+                if (html.classList.contains('dark')) {
+                    html.classList.remove('dark');
+                    localStorage.setItem('em_theme', 'light');
+                } else {
+                    html.classList.add('dark');
+                    localStorage.setItem('em_theme', 'dark');
+                }
+            };
+            if (localStorage.getItem('em_theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        function switchTab(tabId) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            // Show active tab
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            // Nav buttons styling
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-brand-600', 'dark:text-brand-400', 'font-semibold');
+                btn.classList.add('text-slate-400');
+            });
+
+            const activeNav = document.getElementById(`nav-btn-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-slate-400');
+                activeNav.classList.add('text-brand-600', 'dark:text-brand-400', 'font-semibold');
+            }
+
+            if (tabId === 'home') renderHome();
+            if (tabId === 'profile') renderProfile();
+            if (tabId === 'test') prepareTestTab();
+        }
+
+        function renderHeaderStats() {
+            document.getElementById('header-streak-count').innerText = state.streak;
+            document.getElementById('header-points-count').innerText = state.points;
+        }
+
+        /* ================= 5. HOME DASHBOARD LOGIC ================= */
+        function renderHome() {
+            document.getElementById('home-welcome-name').innerText = `হ্যালো, ${state.userName}! 👋`;
+            document.getElementById('home-learned-words-count').innerText = state.masteredWords.length;
+            
+            const maxUnlocked = Math.max(...state.unlockedLevels);
+            document.getElementById('home-current-level-badge').innerText = `Level ${maxUnlocked}`;
+
+            // Calculate daily progress (e.g. capped at 5 words per day goal)
+            const dailyGoal = 5;
+            const learnedTodayCount = Math.min(state.masteredWords.length, dailyGoal);
+            const percentage = Math.round((learnedTodayCount / dailyGoal) * 100);
+            document.getElementById('home-daily-progress-text').innerText = `${learnedTodayCount} / ${dailyGoal} শব্দ`;
+            document.getElementById('home-daily-progress-bar').style.width = `${percentage}%`;
+
+            // Render Level Cards
+            const container = document.getElementById('home-levels-list');
+            container.innerHTML = '';
+
+            for (let l = 1; l <= 5; l++) {
+                const isUnlocked = state.unlockedLevels.includes(l);
+                const levelWords = VOCABULARY_DATA[l] || [];
+                const masteredInLevel = levelWords.filter(w => state.masteredWords.includes(w.id)).length;
+                
+                const card = document.createElement('div');
+                card.className = `glass-card p-4 rounded-2xl border transition flex items-center justify-between ${
+                    isUnlocked ? 'border-slate-200 dark:border-slate-800 cursor-pointer active-scale' : 'opacity-60 border-dashed border-slate-300 dark:border-slate-700'
+                }`;
+
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-10 h-10 rounded-xl ${isUnlocked ? 'bg-brand-500/10 text-brand-600 dark:text-brand-400' : 'bg-slate-200 dark:bg-slate-800 text-slate-400'} flex items-center justify-center font-bold">
+                            ${isUnlocked ? l : '<i class="fa-solid fa-lock text-xs"></i>'}
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100">Level ${l}: ${LEVEL_TITLES[l]}</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">${masteredInLevel} / ${levelWords.length} শব্দ আয়ত্ত</p>
+                        </div>
+                    </div>
+                    ${isUnlocked ? '<i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>' : '<span class="text-xs text-slate-400 font-medium">লকড</span>'}
+                `;
+
+                if (isUnlocked) {
+                    card.onclick = () => {
+                        state.currentLearnLevel = l;
+                        state.currentLearnIndex = 0;
+                        switchTab('learn');
+                        renderLearnPills();
+                        loadLearnCard();
+                    };
+                }
+                container.appendChild(card);
+            }
+        }
+
+        /* ================= 6. LEARN MODULE LOGIC ================= */
+        function renderLearnPills() {
+            const container = document.getElementById('learn-level-pills');
+            container.innerHTML = '';
+
+            for (let l = 1; l <= 5; l++) {
+                const isUnlocked = state.unlockedLevels.includes(l);
+                const btn = document.createElement('button');
+                btn.className = `px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition active-scale ${
+                    state.currentLearnLevel === l
+                        ? 'bg-brand-600 text-white shadow-md'
+                        : isUnlocked
+                        ? 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
+                        : 'bg-slate-100 dark:bg-slate-900 text-slate-400 cursor-not-allowed'
+                }`;
+                btn.innerText = `L${l}: ${LEVEL_TITLES[l].split(' ')[0]}`;
+
+                if (isUnlocked) {
+                    btn.onclick = () => {
+                        state.currentLearnLevel = l;
+                        state.currentLearnIndex = 0;
+                        renderLearnPills();
+                        loadLearnCard();
+                    };
+                }
+                container.appendChild(btn);
+            }
+        }
+
+        function loadLearnCard() {
+            const words = VOCABULARY_DATA[state.currentLearnLevel] || [];
+            if (words.length === 0) return;
+
+            if (state.currentLearnIndex >= words.length) state.currentLearnIndex = words.length - 1;
+            if (state.currentLearnIndex < 0) state.currentLearnIndex = 0;
+
+            const word = words[state.currentLearnIndex];
+            const isMastered = state.masteredWords.includes(word.id);
+
+            document.getElementById('learn-card-progress-label').innerText = `শব্দ ${state.currentLearnIndex + 1} / ${words.length}`;
+            
+            const statusBadge = document.getElementById('learn-card-status-badge');
+            if (isMastered) {
+                statusBadge.className = "px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 font-bold";
+                statusBadge.innerText = "আয়ত্ত করা হয়েছে ✓";
+            } else {
+                statusBadge.className = "px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300";
+                statusBadge.innerText = "অসম্পূর্ণ";
+            }
+
+            document.getElementById('learn-word-english').innerText = word.english;
+            document.getElementById('learn-word-phonetics').innerText = word.phonetic;
+            document.getElementById('learn-word-bengali').innerText = word.bengali;
+            document.getElementById('learn-sentence-english').innerText = word.sentence;
+            document.getElementById('learn-sentence-bengali').innerText = word.translation;
+
+            // Audio Button
+            document.getElementById('learn-audio-btn').onclick = () => playAudio(word.english);
+
+            // Mastered Button Toggle
+            const masterBtn = document.getElementById('learn-mark-mastered-btn');
+            if (isMastered) {
+                masterBtn.className = "w-full py-3 px-4 rounded-xl font-bold text-sm bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 active-scale flex items-center justify-center space-x-2";
+                masterBtn.innerHTML = `<i class="fa-solid fa-arrow-rotate-left"></i><span>পুনরায় শিখুন (Unmark)</span>`;
+                masterBtn.onclick = () => toggleMastered(word.id, false);
+            } else {
+                masterBtn.className = "w-full py-3 px-4 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-700 text-white shadow-md active-scale flex items-center justify-center space-x-2";
+                masterBtn.innerHTML = `<i class="fa-solid fa-circle-check"></i><span>শব্দটি আয়ত্ত করেছি (+১০ পয়েন্ট)</span>`;
+                masterBtn.onclick = () => toggleMastered(word.id, true);
+            }
+
+            // Prev / Next
+            document.getElementById('learn-prev-btn').onclick = () => {
+                if (state.currentLearnIndex > 0) {
+                    state.currentLearnIndex--;
+                    loadLearnCard();
+                }
+            };
+            document.getElementById('learn-next-btn').onclick = () => {
+                if (state.currentLearnIndex < words.length - 1) {
+                    state.currentLearnIndex++;
+                    loadLearnCard();
+                } else {
+                    showToast('আপনি এই লেভেলের শেষ শব্দে পৌঁছেছেন!');
+                }
+            };
+        }
+
+        function toggleMastered(wordId, setMastered) {
+            if (setMastered) {
+                if (!state.masteredWords.includes(wordId)) {
+                    state.masteredWords.push(wordId);
+                    state.points += 10;
+                    showToast('নতুন শব্দ আয়ত্ত হয়েছে! +১০ পয়েন্ট');
+                }
+            } else {
+                state.masteredWords = state.masteredWords.filter(id => id !== wordId);
+            }
+            checkBadges();
+            saveState();
+            loadLearnCard();
+        }
+
+        /* Speech Synthesis Web API Audio */
+        function playAudio(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                showToast('আপনার ব্রাউজারে অডিও প্লে ব্যাক সমর্থিত নয়।');
+            }
+        }
+
+        /* ================= 7. INTERACTIVE PRACTICE SYSTEM ================= */
+        let currentPracticeType = null;
+
+        function startPracticeMode(type) {
+            currentPracticeType = type;
+            const container = document.getElementById('practice-interactive-area');
+            container.classList.remove('hidden');
+            
+            // Gather available words from unlocked levels
+            let availableWords = [];
+            state.unlockedLevels.forEach(lvl => {
+                if (VOCABULARY_DATA[lvl]) availableWords = availableWords.concat(VOCABULARY_DATA[lvl]);
+            });
+
+            if (availableWords.length < 4) {
+                showToast('অনুশীলনের জন্য পর্যাপ্ত শব্দ আনলক করা হয়নি!');
+                return;
+            }
+
+            // Random target
+            const target = availableWords[Math.floor(Math.random() * availableWords.length)];
+
+            if (type === 'mcq') renderMCQPractice(target, availableWords);
+            if (type === 'fill') renderFillPractice(target, availableWords);
+            if (type === 'matching') renderMatchingPractice(availableWords);
+            if (type === 'sentence') renderSentencePractice(target);
+        }
+
+        // MCQ Practice
+        function renderMCQPractice(target, availableWords) {
+            const container = document.getElementById('practice-interactive-area');
+            
+            // Options: 1 correct + 3 distractor
+            let options = [target.bengali];
+            while (options.length < 4) {
+                const rand = availableWords[Math.floor(Math.random() * availableWords.length)].bengali;
+                if (!options.includes(rand)) options.push(rand);
+            }
+            options.sort(() => Math.random() - 0.5);
+
+            container.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-brand-600 dark:text-brand-400">MCQ অনুশীলন</span>
+                    <button onclick="document.getElementById('practice-interactive-area').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
+                </div>
+                <div class="text-center space-y-1">
+                    <p class="text-xs text-slate-500">নিচের শব্দের সঠিক বাংলা অর্থ কোনটি?</p>
+                    <h3 class="text-3xl font-black text-slate-900 dark:text-white">${target.english}</h3>
+                </div>
+                <div class="grid grid-cols-1 gap-2">
+                    ${options.map(opt => `
+                        <button onclick="checkMCQAnswer(this, '${opt}', '${target.bengali}')" class="p-3.5 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-xl font-bold text-sm text-left hover:bg-brand-500 hover:text-white transition active-scale">
+                            ${opt}
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function checkMCQAnswer(btn, selected, correct) {
+            if (selected === correct) {
+                btn.className = "p-3.5 bg-emerald-500 text-white rounded-xl font-bold text-sm text-left shadow-md";
+                state.points += 5;
+                saveState();
+                showToast('সঠিক উত্তর! +৫ পয়েন্ট');
+                setTimeout(() => startPracticeMode('mcq'), 1200);
+            } else {
+                btn.className = "p-3.5 bg-red-500 text-white rounded-xl font-bold text-sm text-left shadow-md";
+                showToast(`ভুল উত্তর! সঠিক: ${correct}`);
+            }
+        }
+
+        // Fill in Blanks Practice
+        function renderFillPractice(target, availableWords) {
+            const container = document.getElementById('practice-interactive-area');
+            const sentenceParts = target.sentence.split(new RegExp(`\\b${target.english}\\b`, 'i'));
+            
+            // Generate choices
+            let choices = [target.english];
+            while (choices.length < 3) {
+                const rand = availableWords[Math.floor(Math.random() * availableWords.length)].english;
+                if (!choices.includes(rand)) choices.push(rand);
+            }
+            choices.sort(() => Math.random() - 0.5);
+
+            container.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-amber-500">শূন্যস্থান পূরণ</span>
+                    <button onclick="document.getElementById('practice-interactive-area').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
+                </div>
+                <div class="text-center space-y-2 py-2">
+                    <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                        ${sentenceParts[0] || ''} <span class="px-3 py-1 bg-amber-100 dark:bg-amber-950 text-amber-600 border-b-2 border-amber-500 font-bold">______</span> ${sentenceParts[1] || ''}
+                    </p>
+                    <p class="text-xs text-slate-500 italic">"${target.translation}"</p>
+                </div>
+                <div class="flex flex-wrap gap-2 justify-center">
+                    ${choices.map(choice => `
+                        <button onclick="checkFillAnswer('${choice}', '${target.english}')" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl font-bold text-sm hover:bg-amber-500 hover:text-white transition active-scale">
+                            ${choice}
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function checkFillAnswer(selected, correct) {
+            if (selected.toLowerCase() === correct.toLowerCase()) {
+                state.points += 5;
+                saveState();
+                showToast('চমৎকার! সঠিক উত্তর। +৫ পয়েন্ট');
+                setTimeout(() => startPracticeMode('fill'), 1200);
+            } else {
+                showToast(`ভুল! সঠিক উত্তর: ${correct}`);
+            }
+        }
+
+        // Matching Practice
+        let selectedMatchItem = null;
+        function renderMatchingPractice(availableWords) {
+            const container = document.getElementById('practice-interactive-area');
+            const sample = [...availableWords].sort(() => Math.random() - 0.5).slice(0, 4);
+            
+            const englishList = [...sample].sort(() => Math.random() - 0.5);
+            const bengaliList = [...sample].sort(() => Math.random() - 0.5);
+
+            container.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-emerald-500">শব্দ মেলানো</span>
+                    <button onclick="document.getElementById('practice-interactive-area').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
+                </div>
+                <p class="text-xs text-slate-500 text-center">বামপাশের ইংরেজি শব্দের সাথে ডানপাশের সঠিক বাংলা অর্থ মেলাও</p>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-2">
+                        ${englishList.map(w => `
+                            <button data-match-eng="${w.english}" onclick="handleMatchSelect(this, 'eng', '${w.english}')" class="match-btn w-full p-3 bg-slate-100 dark:bg-slate-800 rounded-xl font-bold text-xs text-center border border-transparent hover:border-emerald-500 transition">
+                                ${w.english}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div class="space-y-2">
+                        ${bengaliList.map(w => `
+                            <button data-match-ben="${w.bengali}" onclick="handleMatchSelect(this, 'ben', '${w.english}')" class="match-btn w-full p-3 bg-slate-100 dark:bg-slate-800 rounded-xl font-bold text-xs text-center border border-transparent hover:border-emerald-500 transition">
+                                ${w.bengali}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            selectedMatchItem = null;
+        }
+
+        function handleMatchSelect(btn, type, matchId) {
+            if (!selectedMatchItem) {
+                selectedMatchItem = { btn, type, matchId };
+                btn.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950');
+            } else {
+                if (selectedMatchItem.type === type) {
+                    // Reset selection if same side tapped
+                    selectedMatchItem.btn.classList.remove('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950');
+                    selectedMatchItem = { btn, type, matchId };
+                    btn.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950');
+                } else {
+                    // Check match
+                    if (selectedMatchItem.matchId === matchId) {
+                        btn.classList.add('opacity-30', 'pointer-events-none');
+                        selectedMatchItem.btn.classList.add('opacity-30', 'pointer-events-none');
+                        state.points += 3;
+                        saveState();
+                        showToast('জোড়া মিলেছে! +৩ পয়েন্ট');
+                    } else {
+                        showToast('মিলেনি! আবার চেষ্টা করো।');
+                        selectedMatchItem.btn.classList.remove('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950');
+                    }
+                    selectedMatchItem = null;
+                }
+            }
+        }
+
+        // Sentence Unscramble
+        let constructedWords = [];
+        function renderSentencePractice(target) {
+            const container = document.getElementById('practice-interactive-area');
+            const cleanSentence = target.sentence.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+            const originalWords = cleanSentence.split(' ');
+            const shuffled = [...originalWords].sort(() => Math.random() - 0.5);
+            constructedWords = [];
+
+            container.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-purple-500">বাক্য তৈরি</span>
+                    <button onclick="document.getElementById('practice-interactive-area').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
+                </div>
+                <div class="text-center space-y-1">
+                    <p class="text-xs text-slate-500">বাংলা অর্থ দেখে সঠিক ইংরেজি বাক্যটি তৈরি করো:</p>
+                    <p class="text-sm font-bold text-brand-600 dark:text-indigo-400">"${target.translation}"</p>
+                </div>
+                <!-- Sentence Assembly Box -->
+                <div id="sentence-assembly-box" class="min-h-[50px] p-3 bg-slate-100 dark:bg-slate-900 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 flex flex-wrap gap-1.5 items-center">
+                    <span class="text-xs text-slate-400 italic">নিচের শব্দগুলোতে চাপ দিন...</span>
+                </div>
+                <!-- Word Chips -->
+                <div id="sentence-word-chips" class="flex flex-wrap gap-2 justify-center">
+                    ${shuffled.map((w, idx) => `
+                        <button onclick="tapSentenceChip(this, '${w}')" class="px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold active-scale shadow-sm">
+                            ${w}
+                        </button>
+                    `).join('')}
+                </div>
+                <button onclick="checkSentenceResult('${cleanSentence}')" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold text-xs shadow-md active-scale">
+                    বাক্য যাচায় করুন
+                </button>
+            `;
+        }
+
+        function tapSentenceChip(btn, word) {
+            constructedWords.push(word);
+            btn.classList.add('opacity-20', 'pointer-events-none');
+            
+            const box = document.getElementById('sentence-assembly-box');
+            box.innerHTML = constructedWords.map((w, i) => `
+                <span class="px-2.5 py-1 bg-brand-600 text-white rounded-lg text-xs font-bold">${w}</span>
+            `).join('');
+        }
+
+        function checkSentenceResult(targetClean) {
+            const assembled = constructedWords.join(' ');
+            if (assembled.toLowerCase() === targetClean.toLowerCase()) {
+                state.points += 10;
+                saveState();
+                showToast('অসাধারণ! সঠিক বাক্য তৈরি হয়েছে। +১০ পয়েন্ট');
+                setTimeout(() => startPracticeMode('sentence'), 1200);
+            } else {
+                showToast('বাক্যটি সঠিক হয়নি। আবার চেষ্টা করো!');
+                startPracticeMode('sentence');
+            }
+        }
+
+        /* ================= 8. LEVEL TEST & UNLOCK SYSTEM ================= */
+        let testQuestions = [];
+        let testCurrentIdx = 0;
+        let testScore = 0;
+        let testSelectedLevel = 1;
+
+        function prepareTestTab() {
+            const select = document.getElementById('test-level-select');
+            select.innerHTML = '';
+            
+            state.unlockedLevels.forEach(lvl => {
+                const opt = document.createElement('option');
+                opt.value = lvl;
+                opt.innerText = `Level ${lvl}: ${LEVEL_TITLES[lvl]}`;
+                select.appendChild(opt);
+            });
+        }
+
+        function startLevelTest() {
+            testSelectedLevel = parseInt(document.getElementById('test-level-select').value);
+            const levelWords = VOCABULARY_DATA[testSelectedLevel] || [];
+            
+            if (levelWords.length === 0) return;
+
+            // Generate 10 test questions (or max available)
+            testQuestions = [...levelWords].sort(() => Math.random() - 0.5).slice(0, 10);
+            testCurrentIdx = 0;
+            testScore = 0;
+
+            document.getElementById('test-intro-card').classList.add('hidden');
+            document.getElementById('test-quiz-card').classList.remove('hidden');
+            document.getElementById('test-result-card').classList.add('hidden');
+
+            loadTestQuestion();
+        }
+
+        function loadTestQuestion() {
+            if (testCurrentIdx >= testQuestions.length) {
+                finishTest();
+                return;
+            }
+
+            const q = testQuestions[testCurrentIdx];
+            document.getElementById('test-question-counter').innerText = `প্রশ্ন ${testCurrentIdx + 1} / ${testQuestions.length}`;
+            document.getElementById('test-question-word').innerText = q.english;
+
+            // Generate options
+            let options = [q.bengali];
+            let pool = [];
+            Object.values(VOCABULARY_DATA).forEach(list => pool = pool.concat(list));
+
+            while (options.length < 4) {
+                const rand = pool[Math.floor(Math.random() * pool.length)].bengali;
+                if (!options.includes(rand)) options.push(rand);
+            }
+            options.sort(() => Math.random() - 0.5);
+
+            const container = document.getElementById('test-options-container');
+            container.innerHTML = options.map(opt => `
+                <button onclick="submitTestAnswer('${opt}', '${q.bengali}')" class="p-3.5 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-xl font-bold text-sm text-left hover:bg-brand-500 hover:text-white transition active-scale">
+                    ${opt}
+                </button>
+            `).join('');
+        }
+
+        function submitTestAnswer(selected, correct) {
+            if (selected === correct) {
+                testScore++;
+            }
+            testCurrentIdx++;
+            loadTestQuestion();
+        }
+
+        function finishTest() {
+            document.getElementById('test-quiz-card').classList.add('hidden');
+            document.getElementById('test-result-card').classList.remove('hidden');
+
+            const percentage = Math.round((testScore / testQuestions.length) * 100);
+            const passed = percentage >= 80;
+
+            const iconContainer = document.getElementById('test-result-icon');
+            const title = document.getElementById('test-result-title');
+            const scoreText = document.getElementById('test-result-score-text');
+            const msg = document.getElementById('test-result-msg');
+
+            scoreText.innerText = `তুমি পেয়েছ ${testScore}/${testQuestions.length} (${percentage}%)`;
+
+            if (passed) {
+                iconContainer.className = "w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400";
+                iconContainer.innerHTML = `<i class="fa-solid fa-trophy"></i>`;
+                title.innerText = "অভিনন্দন! 🎉";
+
+                // Unlock next level logic
+                const nextLvl = testSelectedLevel + 1;
+                if (nextLvl <= 5 && !state.unlockedLevels.includes(nextLvl)) {
+                    state.unlockedLevels.push(nextLvl);
+                    msg.innerText = `তুমি সফলভাবে Level ${nextLvl} আনলক করেছ!`;
+                    showToast(`Level ${nextLvl} আনলক হয়েছে!`);
+                } else {
+                    msg.innerText = "তুমি এই লেভেলে চমৎকার ফলাফল করেছ!";
+                }
+
+                state.points += 50;
+            } else {
+                iconContainer.className = "w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl bg-red-100 text-red-600 dark:bg-red-950 dark:text-red-400";
+                iconContainer.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
+                title.innerText = "আবার চেষ্টা করো!";
+                msg.innerText = "পরবর্তী লেভেল আনলক করতে কমপক্ষে ৮০% নম্বর প্রয়োজন।";
+            }
+
+            checkBadges();
+            saveState();
+        }
+
+        function resetTestView() {
+            document.getElementById('test-result-card').classList.add('hidden');
+            document.getElementById('test-intro-card').classList.remove('hidden');
+            prepareTestTab();
+        }
+
+        /* ================= 9. PROFILE & BADGES ================= */
+        function renderProfile() {
+            document.getElementById('profile-user-name').innerText = state.userName;
+            document.getElementById('profile-stat-points').innerText = state.points;
+            document.getElementById('profile-stat-streak').innerText = `${state.streak} দিন`;
+            document.getElementById('profile-stat-words').innerText = state.masteredWords.length;
+            document.getElementById('profile-stat-level').innerText = `Level ${Math.max(...state.unlockedLevels)}`;
+
+            // Render Badges
+            const container = document.getElementById('profile-badges-grid');
+            container.innerHTML = '';
+
+            BADGES_CONFIG.forEach(badge => {
+                const isUnlocked = state.badges.includes(badge.id);
+                const div = document.createElement('div');
+                div.className = `glass-card p-3 rounded-2xl text-center space-y-1.5 border ${
+                    isUnlocked ? 'border-amber-300/60 dark:border-amber-800' : 'opacity-40 border-slate-200 dark:border-slate-800'
+                }`;
+                div.innerHTML = `
+                    <div class="w-10 h-10 rounded-full ${isUnlocked ? 'bg-amber-100 text-amber-500 dark:bg-amber-950' : 'bg-slate-200 text-slate-400 dark:bg-slate-800'} mx-auto flex items-center justify-center text-lg">
+                        <i class="fa-solid ${badge.icon}"></i>
+                    </div>
+                    <h4 class="text-xs font-bold text-slate-800 dark:text-slate-100">${badge.title}</h4>
+                    <p class="text-[10px] text-slate-500 leading-tight">${badge.desc}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function checkBadges() {
+            if (state.masteredWords.length >= 1 && !state.badges.includes('badge_first')) {
+                state.badges.push('badge_first');
+            }
+            if (state.masteredWords.length >= 10 && !state.badges.includes('badge_novice')) {
+                state.badges.push('badge_novice');
+            }
+            if (state.unlockedLevels.includes(2) && !state.badges.includes('badge_l2')) {
+                state.badges.push('badge_l2');
+            }
+            if (state.unlockedLevels.includes(5) && !state.badges.includes('badge_l5')) {
+                state.badges.push('badge_l5');
+            }
+        }
+
+        function editUserName() {
+            const newName = prompt('আপনার নাম লিখুন:', state.userName);
+            if (newName && newName.trim() !== '') {
+                state.userName = newName.trim();
+                saveState();
+                renderProfile();
+                renderHome();
+            }
+        }
+
+        function confirmResetProgress() {
+            if (confirm('আপনি কি নিশ্চিত যে আপনার সমস্ত শেখার তথ্য এবং পয়েন্ট মুছে ফেলতে চান?')) {
+                localStorage.removeItem('english_master_v1');
+                state = {
+                    userName: 'শিক্ষার্থী',
+                    unlockedLevels: [1],
+                    currentLearnLevel: 1,
+                    currentLearnIndex: 0,
+                    masteredWords: [],
+                    points: 0,
+                    streak: 1,
+                    lastActiveDate: new Date().toISOString().slice(0, 10),
+                    badges: ['badge_first']
+                };
+                saveState();
+                renderHome();
+                renderProfile();
+                showToast('সমস্ত তথ্য সফলভাবে রিসেট করা হয়েছে!');
+            }
+        }
+
+        /* ================= 10. UTILITIES ================= */
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2500);
+        }
+    </script>
 </body>
 </html>
+```
