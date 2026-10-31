@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeMaster | Learn Coding</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg: #090d1b;
+    --panel: #11182b;
+    --card: #151e33;
+    --purple: #8b5cf6;
+    --blue: #38bdf8;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 245px;
+    background: #0d1426;
+    padding: 25px 18px;
+    border-right: 1px solid #202a42;
+    position: fixed;
+    height: 100vh;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 45px;
+    color: white;
+}
+
+.logo span {
+    color: var(--purple);
+}
+
+.menu-title {
+    color: var(--muted);
+    font-size: 11px;
+    margin: 25px 10px 12px;
+    letter-spacing: 2px;
+}
+
+.nav-btn {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #aab6cc;
+    text-align: left;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+    background: linear-gradient(100deg,#713ee7,#4f46e5);
+    color: white;
+}
+
+/* MAIN */
+
+.main {
+    margin-left: 245px;
+    width: calc(100% - 245px);
+    padding: 30px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    gap: 15px;
+}
+
+.topbar h2 {
+    font-size: 22px;
+}
+
+.profile {
+    background: var(--card);
+    padding: 10px 17px;
+    border-radius: 30px;
+    font-size: 13px;
+}
+
+/* HERO */
+
+.hero {
+    padding: 40px;
+    border-radius: 22px;
+    background: linear-gradient(120deg,#5725bc,#312e81,#172554);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 35px;
+}
+
+.hero h1 {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    color: #e0e7ff;
+    margin-bottom: 25px;
+}
+
+.primary-btn {
+    border: none;
+    padding: 13px 24px;
+    border-radius: 10px;
+    background: white;
+    color: #4c1d95;
+    font-weight: 700;
+}
+
+.hero-art {
+    position: absolute;
+    right: 55px;
+    top: 30px;
+    font-size: 100px;
+    opacity: .8;
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+    margin-bottom: 35px;
+}
+
+.stat {
+    background: var(--panel);
+    border: 1px solid #26334e;
+    padding: 22px;
+    border-radius: 16px;
+}
+
+.stat p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.stat h2 {
+    font-size: 27px;
+    margin-top: 8px;
+}
+
+/* COURSES */
+
+.section-title {
+    font-size: 21px;
+    margin-bottom: 20px;
+}
+
+.courses {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 17px;
+}
+
+.course {
+    background: var(--card);
+    border: 1px solid #27334d;
+    border-radius: 17px;
+    padding: 22px;
+    transition: .3s;
+}
+
+.course:hover {
+    transform: translateY(-6px);
+    border-color: var(--purple);
+}
+
+.course-icon {
+    font-size: 37px;
+    margin-bottom: 15px;
+}
+
+.course h3 {
+    margin-bottom: 8px;
+}
+
+.course p {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+
+.course button {
+    width: 100%;
+    padding: 10px;
+    background: #30235a;
+    border: 1px solid #7047d8;
+    border-radius: 8px;
+    color: white;
+}
+
+/* EDITOR */
+
+.editor-box {
+    background: var(--panel);
+    padding: 23px;
+    border: 1px solid #26334e;
+    border-radius: 18px;
+    margin-top: 30px;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+select {
+    background: #222c43;
+    color: white;
+    border: 1px solid #394762;
+    padding: 9px;
+    border-radius: 7px;
+}
+
+textarea {
+    width: 100%;
+    height: 230px;
+    background: #080d19;
+    color: #a5f3fc;
+    padding: 18px;
+    border: 1px solid #34415e;
+    border-radius: 12px;
+    resize: vertical;
+    font-size: 14px;
+    font-family: monospace;
+    line-height: 1.7;
+}
+
+.run-btn {
+    background: linear-gradient(100deg,#8b5cf6,#4f46e5);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 9px;
+    color: white;
+    font-weight: 700;
+    margin-top: 13px;
+}
+
+iframe {
+    background: white;
+    width: 100%;
+    height: 230px;
+    border: none;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+/* PAGES */
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.lesson {
+    background: var(--card);
+    padding: 23px;
+    border-radius: 15px;
+    margin-bottom: 14px;
+}
+
+.lesson button {
+    background: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    margin-top: 13px;
+}
+
+.progress {
+    background: #29344c;
+    height: 9px;
+    border-radius: 20px;
+    margin-top: 15px;
+}
+
+.progress div {
+    background: linear-gradient(90deg,#8b5cf6,#38bdf8);
+    height: 100%;
+    border-radius: 20px;
+}
+
+footer {
+    color: var(--muted);
+    text-align: center;
+    padding: 35px 10px;
+    font-size: 12px;
+}
+
+@media(max-width:900px) {
+    .courses { grid-template-columns: repeat(2,1fr); }
+    .hero-art { display:none; }
+}
+
+@media(max-width:650px) {
+    .sidebar {
+        width: 65px;
+        padding: 15px 7px;
+    }
+
+    .logo {
+        font-size: 17px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .logo span { display:none; }
+
+    .menu-title { display:none; }
+
+    .nav-btn {
+        text-align: center;
+        padding: 13px 3px;
+        font-size: 0;
+    }
+
+    .nav-btn::first-letter {
+        font-size: 19px;
+    }
+
+    .main {
+        margin-left: 65px;
+        width: calc(100% - 65px);
+        padding: 15px;
+    }
+
+    .stats { grid-template-columns: 1fr; }
+    .courses { grid-template-columns: 1fr; }
+    .hero { padding: 28px 20px; }
+    .hero h1 { font-size: 25px; }
+    .topbar h2 { font-size: 16px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+    <div class="logo">Code<span>Master.</span></div>
+
+    <p class="menu-title">MENU</p>
+
+    <button class="nav-btn active" onclick="showPage('home',this)">🏠 Home</button>
+    <button class="nav-btn" onclick="showPage('courses',this)">📚 Courses</button>
+    <button class="nav-btn" onclick="showPage('editor',this)">💻 Code Editor</button>
+    <button class="nav-btn" onclick="showPage('challenge',this)">🏆 Challenge</button>
+    <button class="nav-btn" onclick="showPage('profile',this)">👤 Profile</button>
+</aside>
+
+<main class="main">
+
+<div class="topbar">
+    <h2>Dashboard</h2>
+    <div class="profile">👨‍💻 Student</div>
+</div>
+
+<!-- HOME -->
+
+<section id="home" class="page active">
+
+<div class="hero">
+    <h1>Learn to Code. Build Your Future.</h1>
+    <p>Start your programming journey with CodeMaster.</p>
+    <button class="primary-btn" onclick="showPage('courses')">
+        Explore Courses →
+    </button>
+    <div class="hero-art">🚀</div>
+</div>
+
+<div class="stats">
+    <div class="stat">
+        <p>📚 Available Courses</p>
+        <h2>04</h2>
+    </div>
+    <div class="stat">
+        <p>🔥 Learning Streak</p>
+        <h2>01 Day</h2>
+    </div>
+    <div class="stat">
+        <p>🏆 Your Points</p>
+        <h2 id="points">000</h2>
+    </div>
+</div>
+
+<h2 class="section-title">Popular Courses</h2>
+
+<div class="courses">
+
+<div class="course">
+    <div class="course-icon">🌐</div>
+    <h3>HTML</h3>
+    <p>Learn website structure.</p>
+    <button onclick="selectLanguage('HTML')">Start Learning →</button>
+</div>
+
+<div class="course">
+    <div class="course-icon">🎨</div>
+    <h3>CSS</h3>
+    <p>Design beautiful websites.</p>
+    <button onclick="selectLanguage('CSS')">Start Learning →</button>
+</div>
+
+<div class="course">
+    <div class="course-icon">⚡</div>
+    <h3>JavaScript</h3>
+    <p>Make websites interactive.</p>
+    <button onclick="selectLanguage('JavaScript')">Start Learning →</button>
+</div>
+
+<div class="course">
+    <div class="course-icon">🐍</div>
+    <h3>Python</h3>
+    <p>Learn Python programming.</p>
+    <button onclick="selectLanguage('Python')">Start Learning →</button>
+</div>
+
+</div>
+
+</section>
+
+<!-- COURSES -->
+
+<section id="courses" class="page">
+    <h2 class="section-title">📚 All Courses</h2>
+
+    <div id="courseList"></div>
+</section>
+
+<!-- EDITOR -->
+
+<section id="editor" class="page">
+
+    <h2 class="section-title">💻 Online Code Editor</h2>
+
+    <div class="editor-box">
+
+        <div class="editor-header">
+            <h3>Code Playground</h3>
+
+            <select id="language" onchange="changeCode()">
+                <option value="HTML">HTML</option>
+                <option value="CSS">CSS</option>
+                <option value="JavaScript">JavaScript</option>
+            </select>
+        </div>
+
+        <textarea id="code"><h1>Hello World!</h1>
+<p>Welcome to CodeMaster.</p>
+<button onclick="alert('Great Job!')">Click Me</button></textarea>
+
+        <button class="run-btn" onclick="runCode()">▶ Run Code</button>
+
+        <h3 style="margin-top:25px">Live Preview</h3>
+
+        <iframe id="output" title="Code preview" sandbox="allow-scripts"></iframe>
+
+    </div>
+</section>
+
+<!-- CHALLENGE -->
+
+<section id="challenge" class="page">
+
+    <h2 class="section-title">🏆 Coding Challenge</h2>
+
+    <div class="lesson">
+        <h3>Challenge 01: Hello World</h3>
+        <p>Write an HTML heading that displays Hello World!</p>
+        <button onclick="selectLanguage('HTML')">Practice Now</button>
+    </div>
+
+    <div class="lesson">
+        <h3>Challenge 02: Change Color</h3>
+        <p>Use CSS to change a heading's text color to blue.</p>
+        <button onclick="selectLanguage('CSS')">Practice Now</button>
+    </div>
+
+    <div class="lesson">
+        <h3>Challenge 03: JavaScript Alert</h3>
+        <p>Use JavaScript to show an alert message.</p>
+        <button onclick="selectLanguage('JavaScript')">Practice Now</button>
+    </div>
+
+</section>
+
+<!-- PROFILE -->
+
+<section id="profile" class="page">
+
+    <h2 class="section-title">👤 My Profile</h2>
+
+    <div class="lesson">
+        <h2>Welcome, Student!</h2>
+        <p>Your Coding Journey</p>
+        <h3 style="margin-top:20px">Learning Progress</h3>
+        <div class="progress">
+            <div id="progressBar" style="width:0%"></div>
+        </div>
+        <p id="progressText" style="margin-top:10px">0% Completed</p>
+    </div>
+
+</section>
+
+<footer>
+    © 2026 CodeMaster. Made for Future Developers. 💜
+</footer>
+
+</main>
+</div>
+
+<script>
+
+let score = 0;
+let completed = 0;
+
+const examples = {
+    HTML: '<h1>Hello World!</h1>\n<p>My first website.</p>',
+    CSS: 'h1 {\n  color: blue;\n  font-size: 40px;\n}',
+    JavaScript: "document.body.innerHTML = '<h1>Hello JavaScript!</h1>';"
+};
+
+const descriptions = {
+    HTML: "HTML is the language used to create webpage structure.",
+    CSS: "CSS is used to style and design webpages.",
+    JavaScript: "JavaScript makes websites interactive.",
+    Python: "Python is a popular programming language."
+};
+
+function showPage(page, button) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(page).classList.add('active');
+
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+    if(button) button.classList.add('active');
+    else {
+        const index = ['home','courses','editor','challenge','profile'].indexOf(page);
+        document.querySelectorAll('.nav-btn')[index].classList.add('active');
+    }
+}
+
+function selectLanguage(lang) {
+    showPage('editor');
+    document.getElementById('language').value = lang === 'Python' ? 'HTML' : lang;
+    changeCode();
+}
+
+function changeCode() {
+    const lang = document.getElementById('language').value;
+    document.getElementById('code').value = examples[lang];
+}
+
+function runCode() {
+    const lang = document.getElementById('language').value;
+    const code = document.getElementById('code').value;
+
+    if(lang === 'HTML') {
+        document.getElementById('output').srcdoc = code;
+    }
+
+    if(lang === 'CSS') {
+        document.getElementById('output').srcdoc =
+        '<style>' + code + '</style><h1>Hello CSS!</h1><p>Live CSS Preview</p>';
+    }
+
+    if(lang === 'JavaScript') {
+        const safeCode = code.replace(/<\/script/gi, '<\\/script');
+        document.getElementById('output').srcdoc =
+        '<body><h2>JavaScript Output</h2><script>' +
+        safeCode + '<\/script></body>';
+    }
+
+    score += 10;
+    completed += 1;
+
+    document.getElementById('points').innerText = score;
+    const progress = Math.min(completed * 10,100);
+    document.getElementById('progressBar').style.width = progress + '%';
+    document.getElementById('progressText').innerText = progress + '% Completed';
+}
+
+const courseList = document.getElementById('courseList');
+
+Object.keys(descriptions).forEach(lang => {
+    courseList.innerHTML += `
+    <div class="lesson">
+        <h3>${lang}</h3>
+        <p>${descriptions[lang]}</p>
+        <button onclick="selectLanguage('${lang}')">Start Practice →</button>
+    </div>`;
+});
+
+</script>
+
+</body>
+</html>
